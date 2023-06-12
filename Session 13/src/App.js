@@ -14,7 +14,6 @@ import Instamart from "./components/Instamart";
 import { Provider } from "react-redux";
 import store from "./utils/store.js";
 import Cart from "./components/Cart";
-import Auth from "./utils/auth";
 
 // Named IMPORT-->Not object Destructing
 // import {Title} from "./components/Title";
@@ -111,10 +110,6 @@ const appRouter = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
-      },
-      {
-        path: "/login",
-        element: <Auth />,
       },
     ],
   },
