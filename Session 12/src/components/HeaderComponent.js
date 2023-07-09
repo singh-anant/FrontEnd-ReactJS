@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext.js";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import store from "../utils/store";
-const loggedIn = () => {
-  // API call to check authentication
-  return true;
-};
+import { logout } from "../utils/authSlice";
+
 const Title = () => (
   <a href="/">
     <img
@@ -19,7 +18,10 @@ const Title = () => (
 );
 
 const HeaderComponent = () => {
-  const [isLoggedIn, setisLoggedIn] = useState(false);
+  // const [isLoggedIn, setisLoggedIn] = useState(false);
+  const isLoggedIn = useSelector((store) => store.auth.isLoggedIn);
+  console.log(isLoggedIn);
+  const dispatch = useDispatch();
   const isOnline = useOnlineStatus();
   // We can have or create multiple context
   const { user } = useContext(UserContext);
@@ -51,16 +53,13 @@ const HeaderComponent = () => {
           <li>
             {/* use conditional rendering for login and logout */}
             {isLoggedIn ? (
-              <button
-                className="logout-btn"
-                onClick={() => setisLoggedIn(false)}
-              >
+              <button className="logout-btn" onClick={() => dispatch(logout())}>
                 Logout
               </button>
             ) : (
-              <button className="login-btn" onClick={() => setisLoggedIn(true)}>
-                Login
-              </button>
+              <Link to="/login">
+                <button className="login-btn">Login</button>
+              </Link>
             )}
           </li>
           <li>Cart</li>
